@@ -7,19 +7,19 @@ export class Response {
         this.value = value;
     }
 
-    private getKey(): any {
+    public getKey(): any {
         return this.key;
     }
 
-    private setKey(key: any): void {
+    public setKey(key: any): void {
         this.key = key;
     }
 
-    private getValue(value: any): any {
+    public getValue(value: any): any {
         return this.value;
     }
 
-    private setValue(value: any): any {
+    public setValue(value: any): any {
         this.value = value;
     }
 }
