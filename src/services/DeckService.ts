@@ -1,7 +1,8 @@
 import { Card } from "../models/Card";
 import { Deck } from "../models/Deck";
 import { DECK_CONSTANTS } from "../utils/Constants";
-
+import { Guid } from "guid-typescript";
+import { DatabaseManagerService } from "./DatabaseManager";
 export class DeckService {
     /**
      * Class that holds the logic for the creation and dealing of cards to players.
@@ -24,13 +25,17 @@ export class DeckService {
      * @returns Deck object.
      */
 
-    public createDeck(shuffle: string): Deck {
+    public async createDeck(shuffle: string): Promise<Deck> {
         try {
             const suits: Array<string> = DECK_CONSTANTS.suits;
             const values: Array<string> = DECK_CONSTANTS.values;
             const extras: string = DECK_CONSTANTS.extras;
 
             const deckOfCards: Deck = new Deck();
+            const currentDate: string = new Date(Date.now()).toISOString();
+
+            // add the deck to the database.
+            await DatabaseManagerService.getInstance().putItem("Deck", [deckOfCards.deckId, currentDate]);
 
             // add the suit and values.
             suits.forEach((suit) => {
@@ -50,7 +55,9 @@ export class DeckService {
                 deckOfCards.shuffleDeck();
             }
 
-            // add to deck database.
+            // add cards to the Card database with the deckId as its foreign key.
+
+
             return deckOfCards;
         }
         catch (err) {

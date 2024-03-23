@@ -12,3 +12,11 @@ export const STATUS_CODES: Map<string, number> = new Map(
       ["BAD REQUEST", 400]
     ]
 );
+
+export const DATABASE_CONSTANTS = {
+  PORT: 8041,
+  HOST: "localhost",
+  USER: "kanjambhat.lidhoo",
+  DATABASE_NAME: "DeckDatabase",
+  DATABASE_PASSWORD: "Mahamaya*99"
+};

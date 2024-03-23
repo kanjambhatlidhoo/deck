@@ -12,11 +12,11 @@ export class DeckController {
      * @param res Express Response Object
      * @returns Express response object. (res)
     */
-    public createDeck(req: any, res: any): any {
+    public async createDeck(req: any, res: any): Promise<any> {
         try {
             const shuffle: string = req.query?.shuffle ? req.query.shuffle : undefined;
 
-            const deckOfCards: Deck = DeckService.getInstance().createDeck(shuffle);
+            const deckOfCards: Deck = await DeckService.getInstance().createDeck(shuffle);
 
             const response: Response = new Response("deck", deckOfCards.getDeck());
 
