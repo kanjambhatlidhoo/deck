@@ -1,2 +1,4 @@
-node_modules
-compiled_dir
+node_modules/*
+compiled_dir/*
+*.js
+package-lock.json

@@ -1,5 +1,5 @@
 import express from "express";
-import { RouteDeck } from "./RouteDeck"
+import { RouteDeck } from "./RouteDeck.js"
 export class Router {
     private _expressRouter: any;
 
