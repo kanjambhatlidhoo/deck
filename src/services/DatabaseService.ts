@@ -1,5 +1,5 @@
 import { Pool, QueryResult } from "pg";
-import { DATABASE_CONSTANTS } from "../utils/Constants";
+import { DATABASE_CONSTANTS } from "../utils/Constants.js";
 export class Database {
     private static instance: Database;
     private pool: Pool;
@@ -27,7 +27,7 @@ export class Database {
      * @param query : string. Contains the sql query.
      * @returns the rows of the database in return.
      */
-    async queryDatabase(query: string): Promise<any[]> {
+    public async queryDatabase(query: string): Promise<any[]> {
         const client = await this.pool.connect();
         try {
             const result: QueryResult = await client.query(query);
@@ -42,7 +42,7 @@ export class Database {
      * Close the connection pool.
      * @returns void.
      */
-    async closePool(): Promise<void> {
+    public async closePool(): Promise<void> {
         if (this.pool) {
             await this.pool.end();
         }

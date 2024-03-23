@@ -1,13 +1,13 @@
 export class Card {
-    suit : string;
+    suit : string | undefined;
     value : string;
 
-    public constructor (suit: string, value: string) {
+    public constructor (suit: string | undefined, value: string) {
         this.suit = suit;
         this.value = value;
     }
 
-    public getSuit (): string {
+    public getSuit (): string | undefined {
         return this.suit;
     }
 

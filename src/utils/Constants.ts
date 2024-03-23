@@ -16,7 +16,7 @@ export const STATUS_CODES: Map<string, number> = new Map(
 export const DATABASE_CONSTANTS = {
   PORT: 8041,
   HOST: "localhost",
-  USER: "kanjambhat.lidhoo",
+  USER: "postgres",
   DATABASE_NAME: "DeckDatabase",
-  DATABASE_PASSWORD: "xj1192gf"
+  DATABASE_PASSWORD: "Mahamaya*99"
 };

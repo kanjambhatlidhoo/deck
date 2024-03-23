@@ -1,5 +1,5 @@
 import express from "express";
-import { Router } from "./src/routes/Router";
+import { Router } from "./src/routes/Router.js";
 import * as bodyParser from "body-parser";
 
 export class App {
@@ -26,3 +26,5 @@ export class App {
         this.app.use(bodyParser.urlencoded({ extended: true }));
     }
 }
+
+module.exports = new App();

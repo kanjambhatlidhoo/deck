@@ -1,6 +1,6 @@
 import {Pool, QueryResult} from "pg";
-import { Query } from "./SQL/query";
-import { Database } from "./DatabaseService";
+import { Query } from "./SQL/query.js";
+import { Database } from "./DatabaseService.js";
 
 export class DatabaseManagerService {
     private static instance: DatabaseManagerService;
@@ -21,9 +21,9 @@ export class DatabaseManagerService {
      * @param values 
      * @returns the rows of the table.
      */
-    async putItem(tableName: string, values: any[]): Promise<any[]> {
+    public async putItem(tableName: string, columnNames: any[], values: any[]): Promise<any[]> {
         try {
-            const query: string = Query.Instance().insertIntoTable(tableName, values);
+            const query: string = Query.Instance().insertIntoTable(tableName, columnNames, values);
             const result: any = await Database.getInstance().queryDatabase(query);
             return result.rows;
         } catch (err) {

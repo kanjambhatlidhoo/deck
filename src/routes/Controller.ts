@@ -1,7 +1,7 @@
-import { Deck } from "../models/Deck";
-import { DeckService } from "../services/DeckService";
-import { Response } from "../models/Response";
-import { STATUS_CODES } from "../utils/Constants";
+import { Deck } from "../models/Deck.js";
+import { DeckService } from "../services/DeckService.js";
+import { Response } from "../models/Response.js";
+import { STATUS_CODES } from "../utils/Constants.js";
 
 export class DeckController {
     // the constructor remains empty.

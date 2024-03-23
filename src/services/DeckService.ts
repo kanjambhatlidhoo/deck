@@ -1,8 +1,8 @@
-import { Card } from "../models/Card";
-import { Deck } from "../models/Deck";
-import { DECK_CONSTANTS } from "../utils/Constants";
+import { Card } from "../models/Card.js";
+import { Deck } from "../models/Deck.js";
+import { DECK_CONSTANTS } from "../utils/Constants.js";
 import { Guid } from "guid-typescript";
-import { DatabaseManagerService } from "./DatabaseManager";
+import { DatabaseManagerService } from "./DatabaseManager.js";
 export class DeckService {
     /**
      * Class that holds the logic for the creation and dealing of cards to players.
@@ -27,15 +27,17 @@ export class DeckService {
 
     public async createDeck(shuffle: string): Promise<Deck> {
         try {
+            const databaseManager: any = DatabaseManagerService.getInstance();
             const suits: Array<string> = DECK_CONSTANTS.suits;
             const values: Array<string> = DECK_CONSTANTS.values;
             const extras: string = DECK_CONSTANTS.extras;
+            let databaseInsertPromise: any = [];
 
             const deckOfCards: Deck = new Deck();
             const currentDate: string = new Date(Date.now()).toISOString();
 
             // add the deck to the database.
-            await DatabaseManagerService.getInstance().putItem("Deck", [deckOfCards.deckId, currentDate]);
+            await databaseManager.putItem("Deck", ["deckId", "createdAt"], [deckOfCards.deckId, currentDate]);
 
             // add the suit and values.
             suits.forEach((suit) => {
@@ -47,7 +49,7 @@ export class DeckService {
 
             // add the extra joker cards (twice).
             for (let i = 1; i <= 2; i++) {
-                deckOfCards.deck.push(new Card("", extras));
+                deckOfCards.deck.push(new Card(undefined, extras));
             }
 
             // if we get a shuffle value from the query parameter, then we shuffle the cards in the array.
@@ -57,6 +59,11 @@ export class DeckService {
 
             // add cards to the Card database with the deckId as its foreign key.
 
+            deckOfCards.deck.forEach(card => {
+                databaseInsertPromise = databaseInsertPromise.concat(databaseManager.putItem("Card", ["deckId", "suit", "value"], [deckOfCards.deckId, card.getSuit(), card.getValue()]));
+            });
+
+            const settledPromises: any[] = await Promise.allSettled(databaseInsertPromise);
 
             return deckOfCards;
         }

@@ -1,4 +1,4 @@
-import { Card } from "./Card";
+import { Card } from "./Card.js";
 import { Guid } from "guid-typescript";
 export class Deck {
     deck: Array<Card>;
