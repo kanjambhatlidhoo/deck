@@ -4,9 +4,9 @@ export class Deck {
     deck: Array<Card>;
     deckId: string;
 
-    public constructor () {
+    public constructor (deckId?: string) {
+        this.deckId = deckId !== undefined ? deckId : Guid.create().toString();
         this.deck = [];
-        this.deckId = Guid.create().toString();
     }
 
     public getDeck (): Array<Card> {
@@ -15,6 +15,10 @@ export class Deck {
 
     public setDeck (deck: Array<Card>): void {
         this.deck = deck;
+    }
+
+    public getDeckId (): string {
+        return this.deckId;
     }
 
     /**
@@ -39,5 +43,19 @@ export class Deck {
                 this.deck[randomIndex], this.deck[currentIndex]];
         }
         return;
+    }
+
+    public convertToDeck(items: any[]): void {
+        try {
+            items.forEach(item => {
+                if (item.suit || item.value) {
+                    this.deck.push(new Card(item.suit, item.value));
+                } else {
+                    throw new Error("The items do not contain either a suit or a value.");
+                }
+            });
+        } catch (err: any) {
+            throw new Error("The items do not contain deck elements. Further details: " + err);
+        }
     }
 }

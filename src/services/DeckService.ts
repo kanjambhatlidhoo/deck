@@ -1,13 +1,14 @@
 import { Card } from "../models/Card.js";
 import { Deck } from "../models/Deck.js";
 import { DECK_CONSTANTS } from "../utils/Constants.js";
-import { Guid } from "guid-typescript";
 import { DatabaseManagerService } from "./DatabaseManager.js";
+import { Utils } from "./../utils/Utils.js";
 export class DeckService {
     /**
      * Class that holds the logic for the creation and dealing of cards to players.
      */
     private static instance: DeckService;
+    private static databaseManager: any = DatabaseManagerService.getInstance();
 
     // class follows a singleton pattern. Only one instance of the class will be created which will be used by every other class.
     // Follows the lazy instantiation method since multithreading is currently not in use.
@@ -27,7 +28,6 @@ export class DeckService {
 
     public async createDeck(shuffle: string): Promise<Deck> {
         try {
-            const databaseManager: any = DatabaseManagerService.getInstance();
             const suits: Array<string> = DECK_CONSTANTS.suits;
             const values: Array<string> = DECK_CONSTANTS.values;
             const extras: string = DECK_CONSTANTS.extras;
@@ -37,7 +37,7 @@ export class DeckService {
             const currentDate: string = new Date(Date.now()).toISOString();
 
             // add the deck to the database.
-            await databaseManager.putItem("Deck", ["deckId", "createdAt"], [deckOfCards.deckId, currentDate]);
+            await DeckService.databaseManager.putItem("Deck", ["deckId", "createdAt"], [deckOfCards.deckId, currentDate]);
 
             // add the suit and values.
             suits.forEach((suit) => {
@@ -60,14 +60,25 @@ export class DeckService {
             // add cards to the Card database with the deckId as its foreign key.
 
             deckOfCards.deck.forEach(card => {
-                databaseInsertPromise = databaseInsertPromise.concat(databaseManager.putItem("Card", ["deckId", "suit", "value"], [deckOfCards.deckId, card.getSuit(), card.getValue()]));
+                databaseInsertPromise = databaseInsertPromise.concat(DeckService.databaseManager.putItem("Card", ["deckId", "suit", "value"], [deckOfCards.deckId, card.getSuit(), card.getValue()]));
             });
 
-            const settledPromises: any[] = await Promise.allSettled(databaseInsertPromise);
+            const res: any[] = await Promise.allSettled(databaseInsertPromise);
 
             return deckOfCards;
         }
         catch (err) {
+            throw new Error("Something went wrong. Error details: " + JSON.stringify(err));
+        }
+    }
+
+    public async getDeckById(deckId: string): Promise<any> {
+        try {
+            const items: any[] = await DeckService.databaseManager.getItemById("Card", "deckId", deckId);
+            const deck: Deck = new Deck(deckId);
+            deck.convertToDeck(items);
+            return deck;
+        } catch (err: any) {
             throw new Error("Something went wrong. Error details: " + JSON.stringify(err));
         }
     }

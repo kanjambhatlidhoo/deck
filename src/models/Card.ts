@@ -1,6 +1,6 @@
 export class Card {
-    suit : string | undefined;
-    value : string;
+    suit: string | undefined;
+    value: string;
 
     public constructor (suit: string | undefined, value: string) {
         this.suit = suit;
