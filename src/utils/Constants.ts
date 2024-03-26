@@ -1,6 +1,6 @@
 export const DECK_CONSTANTS = {
-    "suits" : ["Ace", "Spades", "Clubs", "Diamond"],
-    "values" : ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"],
+    "suits" : ["Hearts", "Spades", "Clubs", "Diamond"],
+    "values" : ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"],
     "extras" : "Joker"
 };
 
