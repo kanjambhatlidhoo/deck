@@ -14,7 +14,7 @@ export class DeckController {
     */
     public async createDeck(req: any, res: any): Promise<any> {
         try {
-            const shuffle: string = req.query?.shuffle ? req.query.shuffle : undefined;
+            const shuffle: boolean = req.query?.shuffle ? req.query.shuffle === 'true' ? true : false : false;
 
             const deckOfCards: Deck = await DeckService.getInstance().createDeck(shuffle);
 
