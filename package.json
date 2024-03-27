@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "tsc",
+    "build": "tsc && node index.js",
     "tslint": "tslint -c tslint.json -p tsconfig.json",
     "test": "npm run build && npm run tslint"
   },

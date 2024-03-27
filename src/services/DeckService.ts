@@ -26,7 +26,7 @@ export class DeckService {
      * @returns Deck object.
      */
 
-    public async createDeck(shuffle: string): Promise<Deck> {
+    public async createDeck(shuffle: boolean): Promise<Deck> {
         try {
             const suits: Array<string> = DECK_CONSTANTS.suits;
             const values: Array<string> = DECK_CONSTANTS.values;
@@ -49,7 +49,7 @@ export class DeckService {
 
             // add the extra joker cards (twice).
             for (let i = 1; i <= 2; i++) {
-                deckOfCards.deck.push(new Card(undefined, extras));
+                deckOfCards.deck.push(new Card("", extras));
             }
 
             // if we get a shuffle value from the query parameter, then we shuffle the cards in the array.
