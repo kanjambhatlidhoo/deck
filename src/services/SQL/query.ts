@@ -1,5 +1,5 @@
 export class Query {
-    private constructor() { };
+    private constructor() { }
 
     private static instance: Query;
 
@@ -17,8 +17,12 @@ export class Query {
      * @params tableName, values --> values pertaining to the table.
      * @returns just the query that the database manager executes.
      */
-    public insertIntoTable (tableName: string, columnNames: any[], values: any[]): any {
+    public insertIntoTable(tableName: string, columnNames: any[], values: any[]): any {
         return `insert into "${tableName}"` + this.makeInsertCase(columnNames, values);
+    }
+
+    public getItemById(tableName: string, columnName: string, id: string): any {
+        return `select * from "${tableName}" where "${columnName}" = '${id}'`;
     }
 
     private makeInsertCase(columnNames: any[], values: any[]): string {
@@ -26,7 +30,7 @@ export class Query {
         let insertCase: string = "(";
 
         columnNames.forEach((columnName, idx) => {
-            insertCase += `"${columnName}"`
+            insertCase += `"${columnName}"`;
 
             if (idx !== columnNames.length - 1) {
                 insertCase += ",";
