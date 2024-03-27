@@ -1,5 +1,5 @@
 import express from "express";
-import { DeckController } from "./Controller";
+import { DeckController } from "./Controller.js";
 
 const controller: DeckController = new DeckController();
 

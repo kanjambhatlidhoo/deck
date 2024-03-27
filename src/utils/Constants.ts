@@ -8,7 +8,15 @@ export const STATUS_CODES: Map<string, number> = new Map(
     [
       ["OK", 200],
       ["CREATED", 201],
-      ["NOT FOUND", 404],
-      ["BAD REQUEST", 400]
+      ["NOT_FOUND", 404],
+      ["BAD_REQUEST", 400]
     ]
 );
+
+export const DATABASE_CONSTANTS = {
+  PORT: 8041,
+  HOST: "localhost",
+  USER: "postgres",
+  DATABASE_NAME: "DeckDatabase",
+  DATABASE_PASSWORD: "Mahamaya*99"
+};
