@@ -28,6 +28,12 @@ export class DeckController {
         }
     }
 
+    /**
+     * Gets the deck by id. 
+     * @param req params -> deckId.
+     * @param res -> the deck object of cards.
+     */
+
     public async getDeckById(req: any, res: any): Promise<any> {
         try {
             const deckOfCards: any = await DeckService.getInstance().getDeckById(req.params.deckId);
@@ -35,8 +41,9 @@ export class DeckController {
             const response: Response = new Response("deck", deckOfCards);
 
             res.status(STATUS_CODES.get("OK")).send(response);
-        } catch (err) {
-            res.status(STATUS_CODES.get("NOT FOUND")).send("Something went wrong. Error details: ", JSON.stringify(err));
+        } catch (err: any) {
+            const error: Response = new Response("error", err.message);
+            res.status(STATUS_CODES.get("NOT_FOUND")).send(error);
         }
     }
 }

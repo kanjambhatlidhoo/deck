@@ -36,9 +36,15 @@ export class DatabaseManagerService {
         try {
             const query: string = Query.Instance().getItemById(tableName, columnName, id);
             const result: any = await Database.getInstance().queryDatabase(query);
+
+            if (result.length == 0) {
+                throw new Error("No deck found for the deckId: " + id);
+            }
+
             return result;
         } catch (err: any) {
             console.log("Some error encountered. Error details: " + JSON.stringify(err));
+            throw err;
         }
     }
 }
