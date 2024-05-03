@@ -68,7 +68,7 @@ export class DeckService {
             return deckOfCards;
         }
         catch (err) {
-            throw new Error("Something went wrong. Error details: " + JSON.stringify(err));
+            throw err;
         }
     }
 
@@ -79,7 +79,7 @@ export class DeckService {
             deck.convertToDeck(items);
             return deck;
         } catch (err: any) {
-            throw new Error("Something went wrong. Error details: " + JSON.stringify(err));
+            throw err;
         }
     }
 
